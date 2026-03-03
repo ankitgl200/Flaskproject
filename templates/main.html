@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BTKIT Study Hub | Home</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}" />
+    
+</head>
+
+<body>
+    <!-- Navbar -->
+    <header class="navbar">
+        <div class="nav-logo">
+            <span class="logo-dot"></span>
+            <span>Study Hub</span>
+        </div>
+        <nav class="nav-links" id="navLinks">
+            <a href="{{ url_for('home') }}" class="active">Home</a>
+            <a href="{{ url_for('notes') }}" >Notes</a>
+            <a href="{{ url_for('papers') }}">Papers</a>
+            <a href="{{ url_for('resources') }}">Resources</a>
+            <a href="{{ url_for('cgpa') }}">CGPA Calculator</a>
+        </nav>
+        <div class="name">
+            <p onclick="showmore()"><i class="fi fi-sr-user"></i>{{name}}</p>
+            <div class="show" id= "show">
+
+                <div class="popup-header">
+                    <span>Username:</span> {{ username }}
+                </div>
+
+                <div class="popup-email">
+                    <span>E-mail:</span> {{ email }}
+                </div>
+
+                <a href="{{ url_for('logout') }}">
+                    <button class="logout-btn">Logout</button>
+                </a>
+            </div>
+        </div>
+        <button class="nav-toggle" id="navToggle">☰</button>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>All Your <span>IMPORTANT</span> Notes & Papers in One Place</h1>
+            <p>
+                A study hub for students. Access notes, previous year
+                papers, lab manuals and more – organized semester-wise for our juniors.
+            </p>
+            <div class="hero-buttons">
+                <a href="{{ url_for('notes') }}" class="btn primary">Browse Notes</a>
+                <a href="{{ url_for('papers') }}" class="btn outline">Previous Year Papers</a>
+            </div>
+        </div>
+        <div class="hero-card">
+            <h3>Why Study Hub?</h3>
+            <ul>
+                <li>✅ First-year friendly</li>
+                <li>✅ Subject-wise notes & PYQs</li>
+                <li>✅ Fast access via Google Drive PDFs</li>
+                <li>✅ Built by SENIORS for JUNIORS</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Quick Access Cards -->
+    <section class="section">
+        <h2 class="section-title">Quick Access</h2>
+        <p class="section-subtitle">Jump directly to important sections</p>
+
+        <div class="card-grid">
+            <a href="{{ url_for('notes') }}" class="card">
+                <h3>First Year Notes</h3>
+                <p>Physics, Maths, BEE, Programming & more.</p>
+            </a>
+
+            <a href="{{ url_for('papers') }}" class="card">
+                <h3>Previous Year Papers</h3>
+                <p>Organized by subject & year for easy revision.</p>
+
+            </a>
+
+            <a href="{{ url_for('resources') }}" class="card">
+                <h3>Lab Manuals & Books</h3>
+                <p>PDFs, important questions & ready notes.</p>
+
+            </a>
+        </div>
+    </section>
+
+    <!-- Ad Space (you’ll paste AdSense here later) -->
+    <section class="section sponsor-sec">
+        <h2 class="section-title">Sponsored</h2>
+        <div class="ad-box">
+            <div class="ad-responsive">
+                <script type="text/javascript">
+                    atOptions = {
+                        'key': '88d5fc21d4097b2a714f8d4d88c74392',
+                        'format': 'iframe',
+                        'height': 90,
+                        'width': 728,
+                        'params': {}
+                    };
+                </script>
+                <script type="text/javascript"
+                    src="//www.highperformanceformat.com/88d5fc21d4097b2a714f8d4d88c74392/invoke.js"></script>
+            </div>
+
+        </div>
+        <div class="adbtn">
+            <a href="https://www.effectivegatecpm.com/thq8payb9p?key=d83c1b6b70912bc44e27d9c04b485a7e"
+                class="btn primary-sm">Support Us</a>
+        </div>
+    </section>
+
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+
+            <div class="footer-section">
+                <h3>Study Hub</h3>
+                <p>Your one-stop platform for notes, papers, syllabus and study resources for B.Tech students.</p>
+            </div>
+
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="{{ url_for('home') }}">Home</a></li>
+                    <li><a href="{{ url_for('notes') }}">Notes</a></li>
+                    <li><a href="{{ url_for('papers') }}">Papers</a></li>
+                    <li><a href="{{ url_for('resources') }}">Resources</a></li>
+                    <li><a href="{{ url_for('cgpa') }}">CGPA Calculator</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h4>Contact</h4>
+                <ul>
+                    <li>Email: <a href="mailto:btkitsudyhub@gmail.com">btkitstudyhub@gmail.com</a></li>
+                    <li>Instagram: <a href="#" target="_blank">N/A</a></li>
+                    <li>Phone: N/A</li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h4>Information</h4>
+                <ul>
+                    <li id="last-updated">Last Updated: loading...</li>
+                    <li>Maintained by: Your Seniors</li>
+                    <li>Made for students, by students ❤️</li>
+                </ul>
+            </div>
+
+        </div>
+
+        <div class="footer-bottom">
+            © <span id="year-footer"></span> Study Hub — All Rights Reserved.
+        </div>
+    </footer>
+
+    <!-- AUTO UPDATE LAST UPDATED & YEAR -->
+    <script>
+        // Last updated date
+        const lastUpdated = document.getElementById("last-updated");
+        const updateDate = new Date(document.lastModified);
+        lastUpdated.textContent = "Last Updated: " + updateDate.toLocaleDateString();
+
+        // Current Year
+        document.getElementById("year-footer").textContent = new Date().getFullYear();
+    </script>
+
+    <!-- <footer class="footer">
+        <p>© <span id="year"></span> BTKIT Study Hub. Built by seniors for juniors.</p>
+    </footer> -->
+
+    <script src="script.js"></script>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signin/Signup</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+    <section>
+        <div class="container">
+            <h2>Register</h2>
+            <form autocomplete="off" action="{{ url_for('register') }}" method='post'>
+                <div class="inputbox">
+                    <span class="icon"><i class="fi fi-sr-id-card"></i></span>
+                    <input type="username" name="username" required>
+                    <label for="username">Username</label>
+                </div>
+                <div class="inputbox">
+                    <span class="icon"><i class="fi fi-sc-circle-user"></i></span>
+                    <input type="text" name="name" required>
+                    <label for="name">Name</label>
+                </div>
+                <div class="inputbox">
+                    <span class="icon"><i class="fi fi-sr-envelope"></i></span>
+                    <input type="email" name="email" required>
+                    <label for="email">E-mail</label>
+                </div>
+                <div class="inputbox">
+                    <span class="icon"><i class="fi fi-sr-lock"></i></span>
+                    <input type="password" name="password" required>
+                    <label for="password">Password</label>
+                </div>
+                <div class="loginbtn">                
+                <p>Already have an account <a href="{{ url_for('login')}}">Login</a></p>
+                </div>
+                <button type="submit">Register</button>
+            </form>
+        </div>
+        {% if error %}
+<div class="popup-error" id="popupError">
+    {% if error is iterable and error is not string %}
+        {% for e in error %}
+            <div>{{ e }}</div>
+        {% endfor %}
+    {% else %}
+        <div>{{ error }}</div>
+    {% endif %}
+</div>
+{% endif %}
+    </section>
+</body>
+<script>
+    setTimeout(() => {
+        const popup = document.getElementById('popupError');
+        if (popup) popup.remove();
+    }, 4500);
+</script>
+
+</html>

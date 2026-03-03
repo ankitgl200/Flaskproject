@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BTKIT Study Hub | Notes</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}" />
+</head>
+
+<body>
+    <!-- Navbar -->
+    <header class="navbar">
+        <div class="nav-logo">
+            <span class="logo-dot"></span>
+            <span>BTKIT Study Hub</span>
+        </div>
+        <nav class="nav-links" id="navLinks">
+            <a href="{{ url_for('home') }}">Home</a>
+            <a href="{{ url_for('notes') }}" class="active">Notes</a>
+            <a href="{{ url_for('papers') }}">Papers</a>
+            <a href="{{ url_for('resources') }}">Resources</a>
+            <a href="{{ url_for('cgpa') }}">CGPA Calculator</a>
+        </nav>
+        <div class="name">
+            <p>{{ name }}</p>
+        </div>
+        <button class="nav-toggle" id="navToggle">☰</button>
+    </header>
+
+    <section class="page-header">
+        <h1>Notes Library</h1>
+        <p>Select semester and open/download PDF notes hosted on Google Drive.</p>
+        <div class="filter-container">
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="maths">Maths</button>
+            <button class="filter-btn" data-filter="physics">Physics</button>
+            <button class="filter-btn" data-filter="bee">BEE</button>
+            <button class="filter-btn" data-filter="PPS">PPS</button>
+            <button class="filter-btn" data-filter="mechanics">Mechanics</button>
+        </div>
+    </section>
+
+
+    <!-- Notes Grid -->
+    <section class="section">
+        <div class="card-grid" id="notesGrid">
+            <!-- Example Note Card – change links to your Google Drive links -->
+
+            <div class="card note-card" data-subject="maths">
+                <h3>Engineering Mathematics I</h3>
+                <p>Complete notes for 1st semester Maths.</p>
+
+                <div class="card-actions">
+                    <a href="https://drive.google.com/FILE_ID_MATH1" target="_blank" class="btn primary-sm">
+                        View / Download
+                    </a>
+                </div>
+            </div>
+
+            <div class="card note-card" data-subject="physics">
+                <h3>Engineering Physics</h3>
+                <p>Unit-wise handwritten and typed notes.</p>
+                <div class="card-actions">
+                    <a href="https://drive.google.com/FILE_ID_PHYSICS" target="_blank" class="btn primary-sm">
+                        View / Download
+                    </a>
+                </div>
+            </div>
+
+            <div class="card note-card" data-subject="maths">
+                <h3>Engineering Mathematics II</h3>
+                <p>Detailed notes with solved examples.</p>
+                <div class="card-actions">
+                    <a href="https://drive.google.com/FILE_ID_MATH2" target="_blank" class="btn primary-sm">
+                        View / Download
+                    </a>
+                </div>
+            </div>
+
+            <div class="card note-card" data-subject="PPS">
+                <h3>Programming in C</h3>
+                <p>Notes + important programs for exams.</p>
+                <div class="card-actions">
+                    <a href="https://drive.google.com/FILE_ID_C" target="_blank" class="btn primary-sm">
+                        View / Download
+                    </a>
+                </div>
+            </div>
+
+            <!-- Add more cards here for your subjects -->
+        </div>
+    </section>
+
+    <!-- Ad Space -->
+    <section class="section">
+        <div class="ad-box">
+            <p>Ad space for notes page.</p>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <p>© <span id="year"></span> BTKIT Study Hub.</p>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+
+</html>

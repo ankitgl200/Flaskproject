@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CGPA Calculator | BTKIT Study Hub</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}" />
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <header class="navbar">
+        <div class="nav-logo">
+            <span class="logo-dot"></span>
+            <span>BTKIT Study Hub</span>
+        </div>
+
+        <nav class="nav-links" id="navLinks">
+            <a href="{{ url_for('home') }}">Home</a>
+            <a href="{{ url_for('notes') }}">Notes</a>
+            <a href="{{ url_for('papers') }}">Papers</a>
+            <a href="{{ url_for('resources') }}">Resources</a>
+            <a href="{{ url_for('cgpa') }}" class="active">CGPA Calculator</a>
+        </nav>
+        <div class="name">
+            <p>{{ name }}</p>
+        </div>
+
+        <button class="nav-toggle" id="navToggle">☰</button>
+    </header>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <h1>CGPA Calculator</h1>
+        <p>Enter each semester SGPA and get your final CGPA instantly.</p>
+    </section>
+
+    <section class="section">
+    <div class="card" style="max-width: 550px; margin:auto;">
+        <h3 style="margin-bottom: 0.7rem;">SGPA Calculator</h3>
+
+        <div>
+            <input type="number" id="marksInput" class="cgpa-input" placeholder="Enter total marks obtained" min="0">
+            <input type="number" id="maxMarksInput" class="cgpa-input" placeholder="Enter maximum marks" min="1">
+        </div>
+
+        <button class="btn primary" id="calcSgpaBtn" style="margin-top: 1rem;">
+            Calculate SGPA
+        </button>
+
+        <div id="sgpaResult" class="cgpa-box" style="margin-top: 1.3rem; font-size: 1rem;">
+            SGPA will appear here.
+        </div>
+    </div>
+</section>
+
+    <section class="section">
+    <div class="card" style="max-width: 550px; margin: auto;">
+        <h3 style="margin-bottom: 0.7rem;"> CGPA Calculator</h3>
+
+        <div id="semesterInputs">
+            <input type="number" class="cgpa-input" placeholder="Semester 1 SGPA" step="0.01" min="0" max="10">
+            <input type="number" class="cgpa-input" placeholder="Semester 2 SGPA" step="0.01" min="0" max="10">
+        </div>
+
+        <button class="btn primary" id="addSemBtn" style="margin-top: 1rem;">+ Add Semester</button>
+        <button class="btn primary" id="removeSemBtn" style="margin-top: 1rem; background:#e11d48;">– Remove Last</button>
+
+        <button class="btn primary" id="calcBtn" style="margin-top: 1rem;">Calculate CGPA</button>
+
+        <div id="resultBox" class="cgpa-box" style="margin-top: 1.3rem; font-size: 1rem;">
+            CGPA will appear here.
+        </div>
+    </div>
+</section>
+
+<hr style="margin:3rem auto; width:80%; border:1px solid #cbd5e1;">
+
+
+
+
+    <!-- Calculator Box -->
+   
+    <footer class="footer">
+        <p>© <span id="year"></span> BTKIT Study Hub.</p>
+    </footer>
+
+    <!-- CGPA Calculator Script -->
+        <script>
+    const semesterInputs = document.getElementById("semesterInputs");
+    const addSemBtn = document.getElementById("addSemBtn");
+    const removeSemBtn = document.getElementById("removeSemBtn");
+    const calcBtn = document.getElementById("calcBtn");
+    const resultBox = document.getElementById("resultBox");
+
+    const calcSgpaBtn = document.getElementById("calcSgpaBtn");
+    const sgpaResult = document.getElementById("sgpaResult");
+
+    const MAX_SEMESTERS = 8;
+
+    // Add Semester
+    addSemBtn.addEventListener("click", () => {
+        const count = semesterInputs.children.length;
+
+        if (count >= MAX_SEMESTERS) {
+            alert("You can only add up to 8 semesters!");
+            addSemBtn.disabled = true;
+            return;
+        }
+
+        const input = document.createElement("input");
+        input.type = "number";
+        input.placeholder = `Semester ${count + 1} SGPA`;
+        input.className = "cgpa-input";
+        input.step = "0.01";
+        input.min = "0";
+        input.max = "10";
+
+        semesterInputs.appendChild(input);
+
+        if (semesterInputs.children.length >= MAX_SEMESTERS) {
+            addSemBtn.disabled = true;
+        }
+    });
+
+    // Remove last semester
+    removeSemBtn.addEventListener("click", () => {
+        const count = semesterInputs.children.length;
+
+        if (count > 2) {
+            semesterInputs.removeChild(semesterInputs.lastElementChild);
+        } else {
+            alert("Minimum 2 semesters required!");
+        }
+
+        addSemBtn.disabled = false;
+    });
+
+    // Calculate CGPA
+    calcBtn.addEventListener("click", () => {
+        const inputs = document.querySelectorAll(".cgpa-input");
+        let sum = 0, count = 0;
+
+        inputs.forEach(input => {
+            const value = parseFloat(input.value);
+            if (!isNaN(value) && value >= 0 && value <= 10) {
+                sum += value;
+                count++;
+            }
+        });
+
+        if (count === 0) {
+            resultBox.textContent = "Please enter valid SGPA values!";
+            return;
+        }
+
+        const cgpa = (sum / count).toFixed(2);
+        resultBox.textContent = `Your CGPA is: ${cgpa}`;
+    });
+
+
+    // SGPA Calculator
+    calcSgpaBtn.addEventListener("click", () => {
+        const marks = parseFloat(document.getElementById("marksInput").value);
+        const maxMarks = parseFloat(document.getElementById("maxMarksInput").value);
+
+        if (!marks || !maxMarks || marks < 0 || maxMarks <= 0) {
+            sgpaResult.textContent = "Please enter valid marks!";
+            return;
+        }
+
+        let percentage = (marks / maxMarks) * 100;
+        let sgpa = (percentage / 10).toFixed(2); // Simple example
+
+        if (sgpa > 10) sgpa = 10;
+
+        sgpaResult.textContent = `Your SGPA is: ${sgpa}`;
+    });
+</script>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+
+    <!-- Additional CSS for input styling -->
+    <style>
+        .cgpa-input {
+            width: 100%;
+            padding: 0.7rem 1rem;
+            margin: 0.4rem 0;
+            border-radius: 12px;
+            border: 1px solid var(--border-subtle);
+            background: rgba(255, 255, 255, 0.9);
+            outline: none;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+        }
+
+        .cgpa-box {
+    margin-top: 1.3rem;
+    font-size: 1rem;
+    padding: 1rem;
+    border-radius: 12px;
+    background: #f8fafc;
+    border: 1px solid #cbd5e1;
+    pointer-events: none; /* Important */
+        }
+
+
+        .btn[disabled] {
+    opacity: .5;
+    cursor: not-allowed;
+        }
+
+        .cgpa-input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+        }
+    </style>
+
+</body>
+</html>
